@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>inoshi</title>
+</head><body>
+<script type="module">
+import { cr, rgb, asset } from "https://js.sabae.cc/aframe.js";
+
+const scene = cr("a-scene");
+//scene.setAttribute("renderer", "precision: mediump; antialias: false; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;");
+scene.setAttribute("renderer", "colorManagement: true;");
+document.body.appendChild(scene);
+
+// for pc
+const isQuest = navigator.userAgent.indexOf("Quest") >= 0;
+const y = isQuest ? 0 : 0;
+const scale = isQuest ? 3 : 3;
+
+if (location.hash == "#bg") {
+  const sky = cr("a-sky", scene);
+  sky.setAttribute("radius", 20);
+  sky.setAttribute("src", "./kidspc2023.jpg");
+}
+
+const model = asset("./inoshi1-min.glb");
+const nino = 8;
+const inos = [];
+const defr = 10; // (m)
+for (let i = 0; i < nino; i++) {
+  const r = defr;
+  const deg = i / nino * 360;
+  const th = deg / (2 * Math.PI);
+  const x = r * Math.cos(th);
+  const z = r * Math.sin(th);
+  const obj = cr("a-entity", scene);
+  obj.setAttribute("gltf-model", model);
+  obj.setAttribute("position", { x, y, z });
+  obj.setAttribute("scale", { x: scale, y: scale, z: scale });
+  obj.setAttribute("rotation", { x: 0, y: -deg - 90, z: 0 });
+  inos.push(obj);
+  obj.startt = performance.now() + Math.random() * 5000;
+  obj.th = th;
+}
+
+setInterval(() => {
+  for (const ino of inos) {
+    const now = performance.now();
+    const dt = now - ino.startt;
+    const r = dt > 0 ? defr - dt / 100 : defr;
+    const th = ino.th;
+    const x = r * Math.cos(th);
+    const z = r * Math.sin(th);
+    ino.setAttribute("position", { x, y, z });
+    if (r < -defr) {
+      ino.startt = now + Math.random() * 5000;
+    }
+  }
+}, 1000 / 60);
+
+</script>
+</body></html>
+
