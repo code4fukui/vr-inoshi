@@ -20,14 +20,15 @@ if (location.hash == "#bg") {
   sky.setAttribute("src", "./kidspc2023.jpg");
 }
 
-const model = asset("./inoshi1-min.glb");
-const nino = 8;
+const model = asset("./inoshi1-min_mt.glb");
+console.log(model);
+const nino = 16;
 const inos = [];
 const defr = 10; // (m)
 for (let i = 0; i < nino; i++) {
   const r = defr;
   const deg = i / nino * 360;
-  const th = deg / (2 * Math.PI);
+  const th = deg / 360 * (2 * Math.PI);
   const x = r * Math.cos(th);
   const z = r * Math.sin(th);
   const obj = cr("a-entity", scene);
