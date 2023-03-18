@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>inoshi optimize demo</title>
+</head><body>
+<script type="module">
+import { cr, rgb, asset } from "https://js.sabae.cc/aframe.js";
+
+const scene = cr("a-scene");
+//scene.setAttribute("renderer", "precision: mediump; antialias: false; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;");
+scene.setAttribute("renderer", "colorManagement: true;");
+document.body.appendChild(scene);
+
+// for pc
+const isQuest = navigator.userAgent.indexOf("Quest") >= 0;
+const y = isQuest ? 0 : 0;
+const scale = isQuest ? 3 : 3;
+
+const glbs = ["./inoshi1.glb", "./inoshi1-opt.glb"];
+for (let i = 0; i < glbs.length; i++) {
+  const glb = glbs[i];
+  const w = 3;
+  const x = w / (glbs.length - 1) * i - w / 2;
+  const z = -2;
+  const model = asset(glb);
+  const obj = cr("a-entity", scene);
+  obj.setAttribute("gltf-model", model);
+  obj.setAttribute("position", { x, y, z });
+  obj.setAttribute("scale", { x: scale, y: scale, z: scale });
+  obj.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+}
+</script>
+</body></html>
