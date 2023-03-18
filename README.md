@@ -18,9 +18,9 @@ npm install --global @gltf-transform/cli
 convert
 ```sh
 gltf-transform optimize inoshi1.glb inoshi1-opt-draco.glb --texture-compress webp
-# 356kb
+# 356kb (gzip -> 345kb)
 gltf-transform optimize inoshi1.glb inoshi1-opt.glb --texture-compress webp --compress false
-# 687kb
+# 687kb (gzip -> 338kb gzip < draco+gzip!)
 gltf-transform optimize inoshi1.glb inoshi1-opt.glb --texture-compress webp --compress false --texture-size 1024
 # 490kb
 gltf-transform optimize inoshi2.glb inoshi2-opt.glb --texture-compress webp --compress false --texture-size 1024
